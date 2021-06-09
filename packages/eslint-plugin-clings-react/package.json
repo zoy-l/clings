@@ -1,0 +1,13 @@
+{
+  "name": "@clings/eslint-plugin-react",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "devDependencies": {
+    "eslint": "^7.28.0"
+  },
+  "scripts": {
+    "test": "mocha test --recursive",
+    "debug": "mocha --inspect \"test/**/*.js\" --reporter dot --timeout 60000"
+  }
+}
