@@ -1,13 +1,24 @@
 {
   "name": "@clings/eslint-plugin-react",
-  "version": "1.0.0",
-  "main": "index.js",
+  "description": "@clings/eslint-plugin-react",
+  "version": "0.0.3",
+  "main": "lib/index.js",
   "license": "MIT",
+  "author": "zoy",
   "devDependencies": {
     "eslint": "^7.28.0"
   },
   "scripts": {
     "test": "mocha test --recursive",
     "debug": "mocha --inspect \"test/**/*.js\" --reporter dot --timeout 60000"
-  }
+  },
+  "dependencies": {
+    "lodash.isequal": "^4.5.0"
+  },
+  "peerDependencies": {
+    "eslint": ">=7.0"
+  },
+  "files": [
+    "lib"
+  ]
 }

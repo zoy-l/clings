@@ -18,8 +18,22 @@ tester.run('attribute-erection-sequence', rule, {
   valid: [
     `
     function test() {
-      return <div src="./assets/logo.png" ariaDescribedat="" alt="React logo" height />
-    }`
+      return <div src='./assets/logo.png' ariaDescribedat='' alt='React logo' height />
+    }`,
+    `
+    function test() {
+      return
+      <div ariaDescribedat='' alt='React logo' src='./assets/logo.png' height />
+    }
+    `,
+    `
+    function test() {
+      return
+      <div ariaDescribedat='' alt='React logo' src={a}
+        height
+      />
+    }
+    `
   ],
   invalid: [
     {
@@ -27,13 +41,130 @@ tester.run('attribute-erection-sequence', rule, {
       function test() {
         return
         <div
-          ariaDescribedat=""
-          alt="React logo"
+          ariaDescribedat=''
+          alt='React logo'
           height
-          src="./assets/logo.png"
+          src='./assets/logo.png'
         />
       }
-        `,
+      `,
+      output: `
+      function test() {
+        return
+        <div
+          src='./assets/logo.png'
+          ariaDescribedat=''
+          alt='React logo'
+          height
+        />
+      }
+      `,
+      errors: [
+        {
+          messageId: 'attributeErectionSequence'
+        }
+      ]
+    },
+    {
+      code: `
+      function test() {
+        return
+        <div ariaDescribedat=''
+          alt='React logo'
+          height
+          src='./assets/logo.png'
+        />
+      }
+      `,
+      output: `
+      function test() {
+        return
+        <div src='./assets/logo.png'
+          ariaDescribedat=''
+          alt='React logo'
+          height
+        />
+      }
+      `,
+      errors: [
+        {
+          messageId: 'attributeErectionSequence'
+        }
+      ]
+    },
+    {
+      code: `
+      function test() {
+        return
+        <div ariaDescribedat='' alt='React logo'
+          height
+          src='./assets/logo.png'
+        />
+      }
+      `,
+      output: `
+      function test() {
+        return
+        <div src='./assets/logo.png' ariaDescribedat=''
+          alt='React logo'
+          height
+        />
+      }
+      `,
+      errors: [
+        {
+          messageId: 'attributeErectionSequence'
+        }
+      ]
+    },
+    {
+      code: `
+      function test() {
+        return
+        <div ariaDescribedat='' alt='React logo' src='./assets/logo.png'
+          height
+        />
+      }
+      `,
+      output: `
+      function test() {
+        return
+        <div src='./assets/logo.png' ariaDescribedat='' alt='React logo'
+          height
+        />
+      }
+      `,
+      errors: [
+        {
+          messageId: 'attributeErectionSequence'
+        }
+      ]
+    },
+    {
+      code: `
+      function test() {
+        const a = '123'
+        return
+        <div
+          ariaDescribedat=''
+          alt='React logo'
+          height
+          src={a}
+        />
+      }
+      `,
+      output: `
+      function test() {
+        const a = '123'
+        return
+        <div
+          ariaDescribedat=''
+          alt='React logo'
+          src={a}
+          height
+        />
+      }
+      `,
       errors: [
         {
           messageId: 'attributeErectionSequence'
