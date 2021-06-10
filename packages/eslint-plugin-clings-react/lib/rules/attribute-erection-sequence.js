@@ -15,31 +15,38 @@ module.exports = {
       recommended: true
     },
     messages: {
-      attributeErectionSequence:
-        'Property lengths are arranged from long to short.\n (多行属性, 长度从长到短排列.)'
+      attributeErectionSequence: 'Property sorting.\n (多行属性排序检查)'
     },
+    schema: [
+      {
+        type: 'object',
+        properties: {
+          longToShort: {
+            type: 'boolean'
+          }
+        },
+        additionalProperties: false
+      }
+    ],
     fixable: 'code'
   },
   create(context) {
+    const config = context.options[0] || {}
+    const isLongToShort = config.longToShort || false
+
     return {
       JSXOpeningElement(node) {
         const { start, end } = node.loc
+        const sourceCode = context.getSourceCode()
 
         if (start.line !== end.line && node.attributes.length > 1) {
-          const length = []
+          const newAttrs = [...node.attributes].sort((a, b) => {
+            return isLongToShort
+              ? b.range[1] - b.range[0] - (a.range[1] - a.range[0])
+              : a.range[1] - a.range[0] - (b.range[1] - b.range[0])
+          })
 
-          for (let i = node.attributes.length - 1; i >= 0; i--) {
-            const { loc } = node.attributes[i]
-            length.unshift(loc.end.column - loc.start.column)
-          }
-          const newLength = [...length].sort((a, b) => b - a)
-
-          if (!isEqual(newLength, length)) {
-            const newAttrs = [...node.attributes].sort((a, b) => {
-              a.loc.end.column - a.loc.start.column
-              return b.loc.end.column - b.loc.start.column - (a.loc.end.column - a.loc.start.column)
-            })
-
+          if (!isEqual(newAttrs, node.attributes)) {
             context.report({
               node,
               messageId: 'attributeErectionSequence',
@@ -51,13 +58,7 @@ module.exports = {
                   ],
                   newAttrs
                     .map((attr, index) => {
-                      const value = attr.value
-                        ? `${attr.name.name}=${
-                            attr.value.value || attr.value.value === ''
-                              ? `'${attr.value.value}'`
-                              : `{${attr.value.expression ? attr.value.expression.name : ''}}`
-                          }`
-                        : attr.name.name
+                      const value = sourceCode.getText(attr)
 
                       if (node.attributes[index].loc.start.line === node.name.loc.start.line) {
                         return SPACE + value
@@ -66,7 +67,7 @@ module.exports = {
                       return (
                         (index !== 0
                           ? '\n' + ''.padEnd(node.attributes[index].loc.start.column)
-                          : SPACE) + (attr.value ? value : attr.name.name)
+                          : SPACE) + value
                       )
                     })
                     .join('')

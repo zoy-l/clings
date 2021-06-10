@@ -29,8 +29,8 @@ tester.run('attribute-erection-sequence', rule, {
     `
     function test() {
       return
-      <div ariaDescribedat='' alt='React logo' src={a}
-        height
+      <div height src={a} alt='React logo'
+        ariaDescribedat=''
       />
     }
     `
@@ -52,10 +52,10 @@ tester.run('attribute-erection-sequence', rule, {
       function test() {
         return
         <div
-          src='./assets/logo.png'
-          ariaDescribedat=''
-          alt='React logo'
           height
+          alt='React logo'
+          ariaDescribedat=''
+          src='./assets/logo.png'
         />
       }
       `,
@@ -79,6 +79,148 @@ tester.run('attribute-erection-sequence', rule, {
       output: `
       function test() {
         return
+        <div height
+          alt='React logo'
+          ariaDescribedat=''
+          src='./assets/logo.png'
+        />
+      }
+      `,
+      errors: [
+        {
+          messageId: 'attributeErectionSequence'
+        }
+      ]
+    },
+    {
+      code: `
+      function test() {
+        return
+        <div ariaDescribedat='' alt='React logo'
+          height
+          src='./assets/logo.png'
+        />
+      }
+      `,
+      output: `
+      function test() {
+        return
+        <div height alt='React logo'
+          ariaDescribedat=''
+          src='./assets/logo.png'
+        />
+      }
+      `,
+      errors: [
+        {
+          messageId: 'attributeErectionSequence'
+        }
+      ]
+    },
+    {
+      code: `
+      function test() {
+        return
+        <div ariaDescribedat='' alt='React logo' src='./assets/logo.png'
+          height
+        />
+      }
+      `,
+      output: `
+      function test() {
+        return
+        <div height alt='React logo' ariaDescribedat=''
+          src='./assets/logo.png'
+        />
+      }
+      `,
+      errors: [
+        {
+          messageId: 'attributeErectionSequence'
+        }
+      ]
+    },
+    {
+      code: `
+      function test() {
+        const a = '123'
+        return
+        <div
+          alt='React logo'
+          height
+          src={a}
+          ariaDescribedat={()=>{
+            console.log(123);
+          }}
+        />
+      }
+      `,
+      output: `
+      function test() {
+        const a = '123'
+        return
+        <div
+          height
+          src={a}
+          alt='React logo'
+          ariaDescribedat={()=>{
+            console.log(123);
+          }}
+        />
+      }
+      `,
+      errors: [
+        {
+          messageId: 'attributeErectionSequence'
+        }
+      ]
+    },
+
+    {
+      options: [{ longToShort: true }],
+      code: `
+      function test() {
+        return
+        <div
+          ariaDescribedat=''
+          alt='React logo'
+          height
+          src='./assets/logo.png'
+        />
+      }
+      `,
+      output: `
+      function test() {
+        return
+        <div
+          src='./assets/logo.png'
+          ariaDescribedat=''
+          alt='React logo'
+          height
+        />
+      }
+      `,
+      errors: [
+        {
+          messageId: 'attributeErectionSequence'
+        }
+      ]
+    },
+    {
+      options: [{ longToShort: true }],
+      code: `
+      function test() {
+        return
+        <div ariaDescribedat=''
+          src='./assets/logo.png'
+          alt='React logo'
+          height
+        />
+      }
+      `,
+      output: `
+      function test() {
+        return
         <div src='./assets/logo.png'
           ariaDescribedat=''
           alt='React logo'
@@ -93,6 +235,7 @@ tester.run('attribute-erection-sequence', rule, {
       ]
     },
     {
+      options: [{ longToShort: true }],
       code: `
       function test() {
         return
@@ -118,6 +261,7 @@ tester.run('attribute-erection-sequence', rule, {
       ]
     },
     {
+      options: [{ longToShort: true }],
       code: `
       function test() {
         return
@@ -141,15 +285,18 @@ tester.run('attribute-erection-sequence', rule, {
       ]
     },
     {
+      options: [{ longToShort: true }],
       code: `
       function test() {
         const a = '123'
         return
         <div
-          ariaDescribedat=''
           alt='React logo'
           height
           src={a}
+          ariaDescribedat={()=>{
+            console.log(123);
+          }}
         />
       }
       `,
@@ -158,10 +305,48 @@ tester.run('attribute-erection-sequence', rule, {
         const a = '123'
         return
         <div
-          ariaDescribedat=''
+          ariaDescribedat={()=>{
+            console.log(123);
+          }}
           alt='React logo'
           src={a}
           height
+        />
+      }
+      `,
+      errors: [
+        {
+          messageId: 'attributeErectionSequence'
+        }
+      ]
+    },
+
+    {
+      code: `
+      function test() {
+        const props = {}
+        return
+        <div
+          onFocus={() => {}}
+          onBlur={() => {}}
+          onInput={() => {}}
+          placeholder={'placeholder'}
+          size="large"
+          {...props}
+        />
+      }
+      `,
+      output: `
+      function test() {
+        const props = {}
+        return
+        <div
+          {...props}
+          size="large"
+          onBlur={() => {}}
+          onFocus={() => {}}
+          onInput={() => {}}
+          placeholder={'placeholder'}
         />
       }
       `,
