@@ -1,6 +1,7 @@
 module.exports = {
   extends: [
     './typescript',
+    'plugin:@clings/react/recommended-r',
     'plugin:react/recommended',
     'plugin:react-hooks/recommended',
     'plugin:jsx-a11y/recommended'
