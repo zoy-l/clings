@@ -11,11 +11,11 @@ module.exports = {
   meta: {
     docs: {
       description: 'attribute erection sequence',
-      category: 'vue-template',
+      category: 'react-jsx',
       recommended: true
     },
     messages: {
-      attributeErectionSequence: 'Property sorting.\n (多行属性排序检查)'
+      attributeErectionSequence: 'Property sorting. (多行属性排序检查)'
     },
     schema: [
       {

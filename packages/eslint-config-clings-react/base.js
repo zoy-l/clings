@@ -9,7 +9,7 @@ module.exports = {
     jest: true,
     browser: true
   },
-  plugins: ['prettier', 'promise'],
+  plugins: ['prettier', 'promise', 'import'],
   rules: {
     'no-new': 'off',
     // 使用 new 构造函数必须储存在变量中

@@ -1,19 +1,19 @@
 {
-  "name": "@clings/eslint-plugin-react",
+  "name": "@clings/eslint-plugin-node",
   "description": "clings eslint plugin",
-  "version": "0.0.8",
-  "main": "lib/index.js",
+  "version": "0.0.1",
+  "main": "index.js",
   "license": "MIT",
-  "author": "zoy",
-  "devDependencies": {
-    "eslint": "^7.28.0"
-  },
   "scripts": {
     "test": "mocha test --recursive",
     "debug": "mocha --inspect \"test/**/*.js\" --reporter dot --timeout 60000"
   },
   "dependencies": {
+    "lodash.clonedeep": "^4.5.0",
     "lodash.isequal": "^4.5.0"
+  },
+  "devDependencies": {
+    "eslint": "^7.28.0"
   },
   "peerDependencies": {
     "eslint": ">=6.0"
