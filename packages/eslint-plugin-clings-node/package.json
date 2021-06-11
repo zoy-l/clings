@@ -9,11 +9,7 @@
     "debug": "mocha --inspect \"test/**/*.js\" --reporter dot --timeout 60000"
   },
   "dependencies": {
-    "lodash.clonedeep": "^4.5.0",
     "lodash.isequal": "^4.5.0"
-  },
-  "devDependencies": {
-    "eslint": "^7.28.0"
   },
   "peerDependencies": {
     "eslint": ">=6.0"

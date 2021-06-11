@@ -5,9 +5,6 @@
   "main": "lib/index.js",
   "license": "MIT",
   "author": "zoy",
-  "devDependencies": {
-    "eslint": "^7.28.0"
-  },
   "scripts": {
     "test": "mocha test --recursive",
     "debug": "mocha --inspect \"test/**/*.js\" --reporter dot --timeout 60000"
