@@ -74,6 +74,9 @@ tester.run('script-import-sort', rule, {
         },
         {
           messageId: 'scriptImportSort'
+        },
+        {
+          messageId: 'scriptImportSort'
         }
       ]
     }
