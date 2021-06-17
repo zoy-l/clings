@@ -1,7 +1,3 @@
-/**
- * @author Zoy
- */
-
 const { RuleTester } = require('eslint')
 const rule = require('../../lib/rules/attribute-erection-sequence')
 

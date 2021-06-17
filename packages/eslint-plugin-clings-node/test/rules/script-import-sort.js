@@ -11,45 +11,37 @@ const tester = new RuleTester({
 
 tester.run('script-import-sort', rule, {
   valid: [
-    //   `
-    //    import foo from 'foo-bar'
-    //    import vue from 'vue'
-    //  `,
-    //   `
-    //    import vue from 'vue'
-    //    import foo from './foo-bar'
-    //  `,
-    //   `
-    //    import path from 'path'
-    //    import vue from 'vue'
-    //    import foo from './foo-bar'
-    //    import react from './vue'
-    //  `
+    `
+      import foo from 'foo-bar'
+      import vue from 'vue'
+     `,
+    `
+      import vue from 'vue'
+      import foo from './foo-bar'
+     `,
+    `
+      import path from 'path'
+      import vue from 'vue'
+      import foo from './foo-bar'
+      import react from './vue'
+     `
   ],
   invalid: [
-    // {
-    //   code: `
-    //      import vue from 'vue'
-    //      import foo from 'foo-bar'
-
-    //    `,
-    //   errors: [
-    //     {
-    //       messageId: 'scriptImportSort'
-    //     }
-    //   ]
-    // },
-    // {
-    //   code: `
-    //      import foo from './foo-bar'
-    //      import vue from 'vue'
-    //    `,
-    //   errors: [
-    //     {
-    //       messageId: 'scriptImportSort'
-    //     }
-    //   ]
-    // },
+    {
+      code: `
+        import foo from './foo-bar'
+        import vue from 'vue'
+       `,
+      output: `
+        import vue from 'vue'
+        import foo from './foo-bar'
+       `,
+      errors: [
+        {
+          messageId: 'scriptImportSort'
+        }
+      ]
+    },
     {
       code: `
         import foo from './foo-bar'
@@ -68,13 +60,34 @@ tester.run('script-import-sort', rule, {
       errors: [
         {
           messageId: 'scriptImportSort'
-        },
+        }
+      ]
+    },
+    {
+      code: `
+        import foo from './foo-bar'
+        import foo2 from './foo-bar2'
+       `,
+      output: `
+        import foo2 from './foo-bar2'
+        import foo from './foo-bar'
+       `,
+      errors: [
         {
           messageId: 'scriptImportSort'
-        },
-        {
-          messageId: 'scriptImportSort'
-        },
+        }
+      ]
+    },
+    {
+      code: `
+        import './foo-bar'
+        import foo2 from './foo-bar2'
+       `,
+      output: `
+        import foo2 from './foo-bar2'
+        import './foo-bar'
+       `,
+      errors: [
         {
           messageId: 'scriptImportSort'
         }
