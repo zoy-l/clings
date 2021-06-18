@@ -92,6 +92,31 @@ tester.run('script-import-sort', rule, {
           messageId: 'scriptImportSort'
         }
       ]
+    },
+    {
+      code: `
+        import './foo-bar'
+        import {
+          foo2,
+          foo1,
+          foo3,
+          foo5
+        } from './foo-bar2'
+       `,
+      output: `
+        import {
+          foo2,
+          foo1,
+          foo3,
+          foo5
+        } from './foo-bar2'
+        import './foo-bar'
+       `,
+      errors: [
+        {
+          messageId: 'scriptImportSort'
+        }
+      ]
     }
   ]
 })

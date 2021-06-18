@@ -1,7 +1,7 @@
 {
   "name": "@clings/eslint-plugin-node",
   "description": "clings eslint plugin",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "main": "index.js",
   "license": "MIT",
   "scripts": {
