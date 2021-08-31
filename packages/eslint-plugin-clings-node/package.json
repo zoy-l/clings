@@ -1,8 +1,8 @@
 {
   "name": "@clings/eslint-plugin-node",
   "description": "clings eslint plugin",
-  "version": "0.0.2",
-  "main": "index.js",
+  "version": "0.0.3",
+  "main": "lib/index.js",
   "license": "MIT",
   "scripts": {
     "test": "mocha test --recursive",
